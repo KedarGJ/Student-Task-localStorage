@@ -26,15 +26,7 @@ Uuid = () => {
 };
 
 
-const stdCount = () => {
-    if(stdArr.length > 0) {
-        noStd.classList.add("d-none")
-        stdtable.classList.remove("d-none")
-    }else{
-        noStd.classList.remove("d-none")
-        stdtable.classList.add("d-none")
-    }
-}
+
 
 const onEdit = (ele) => {
         let editId = ele.closest("tr").id;
@@ -88,17 +80,7 @@ const onDelete = (ele) => {
 }
 
 
-const addStd = (obj) => {
-    let tr = document.createElement("tr");
-    tr.id = obj.stdId;
-    tr.innerHTML =     `<td>${1}</td>
-                        <td>${obj.fname}</td>
-                        <td>${obj.lname}</td>
-                        <td>${obj.email}</td>
-                        <td>${obj.contact}</td>
-                        <td><i class="fa-regular fa-pen-to-square fa-2x text-success" onClick="onEdit(this)"></i></td>
-                        <td><i class="fa-solid fa-trash-can fa-2x text-danger" onClick="onDelete(this)"></i></td>`;
-}
+
 
 
 const templatingOfStd = (arr) => {
@@ -123,7 +105,35 @@ if(localStorage.getItem("stdArr")){
     templatingOfStd(stdArr);
 }
 
+const stdCount = () => {
+    if(stdArr.length > 0) {
+        noStd.classList.add("d-none")
+        stdtable.classList.remove("d-none")
+    }else{
+        noStd.classList.remove("d-none")
+        stdtable.classList.add("d-none")
+    }
+}
 
+stdCount();
+const addStd = (obj) => {
+    let tr = document.createElement("tr");
+    tr.id = obj.stdId;
+    tr.innerHTML =     `<td>${1}</td>
+                        <td>${obj.fname}</td>
+                        <td>${obj.lname}</td>
+                        <td>${obj.email}</td>
+                        <td>${obj.contact}</td>
+                        <td><i class="fa-regular fa-pen-to-square fa-2x text-success" onClick="onEdit(this)"></i></td>
+                        <td><i class="fa-solid fa-trash-can fa-2x text-danger" onClick="onDelete(this)"></i></td>`;
+                        stdContainer.prepend(tr);
+                        let allTr = [...stdContainer.children];
+            
+            for(let i = 0; i < stdArr.length; i++){
+                cl(i)
+               allTr[i].firstElementChild.innerHTML = i + 1; 
+            }
+}
 const onStdAdd = (e) => {
             e.preventDefault();
             let newStd = {
@@ -139,13 +149,8 @@ const onStdAdd = (e) => {
             // templatingOfStd(stdArr);
             stdCount();
             addStd(newStd);
-            stdContainer.prepend(tr);
-            let allTr = [...stdContainer.children]
-                cl(allTr)
-            for(let i = 0; i < stdArr.length; i++){
-                cl(i)
-               allTr[i].firstElementChild.innerHTML = i + 1; 
-            }
+            
+            
             e.target.reset();
             Swal.fire(
                 {
@@ -194,4 +199,5 @@ const onStdupdate = () => {
 
 
 stdForm.addEventListener("submit",onStdAdd)
+
 updateBtn.addEventListener("click", onStdupdate)
